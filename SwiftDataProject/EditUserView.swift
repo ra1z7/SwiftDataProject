@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct EditUserView: View {
-    @Bindable var user: User
+    @Bindable var user: User // Editing with SwiftData objects is no different from editing regular @Observable classes – just with the added bonus that all our data is loaded and saved neatly!
 
     var body: some View {
         Form {

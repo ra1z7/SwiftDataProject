@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 
+// SwiftData's model objects are powered by the same observation system that makes @Observable classes work, which means changes to your model objects are automatically picked up by SwiftUI so that our data and our user interface stay in sync.
 @Model
 class User {
     var name: String
