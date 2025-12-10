@@ -13,7 +13,14 @@ struct ContentView: View {
     // @Query(sort: \User.name) var users: [User]
     @Query(
         filter:
-            #Predicate<User> { user in
+            // The syntax for this is a little odd at first, mostly because this is actually another macro behind the scenes - Swift converts our predicate code into a series of rules it can apply to the underlying database that stores all of SwiftData's objects.
+            #Predicate<User> { user in // That predicate gives us a single user instance to check. In practice that will be called once for each user loaded by SwiftData, and we need to return true if that user should be included in the results.
+                
+                // user.name.localizedStandardContains("R") && user.city == "London"
+                
+                // These predicates support a limited subset of Swift expressions that make reading a little easier:
+                
+                // if user.name.contains("R") { // The contains() method is case-sensitive, use .localizedStandardContains() instead
                 if user.name.localizedStandardContains("R") {
                     if user.city == "London" {
                         return true
@@ -23,6 +30,16 @@ struct ContentView: View {
                 } else {
                     return false
                 }
+                
+                /*
+                 // Following code is not valid, because even though it looks like we're executing pure Swift code, it's important you remember that doesn't actually happen – the #Predicate macro actually rewrites our code to be a series of tests it can apply on the database, which doesn't use Swift internally. To see inside, right-click on #Predicate and select Expand Macro, and you'll see, a huge amount of code appears. Remember, this is the actual code that gets built and run – it's what our #Predicate gets converted into. This stuff looks easy, but it's really complex behind the scenes!
+                 
+                 if user.name.localizedStandardContains("R") {
+                    if user.city == "London" {
+                        return true
+                    }
+                 }
+                 */
             },
         sort: \User.name
     ) var users: [User]
@@ -52,7 +69,8 @@ struct ContentView: View {
                  */
 
                 Button("Add Samples", systemImage: "plus") {
-                    try? modelContext.delete(model: User.self)
+                    // When working with sample data like below, it's helpful to be able to delete existing data before adding the sample data.
+                    try? modelContext.delete(model: User.self) // Tells SwiftData to delete all existing model objects of User type, which means the database is clear before we add the sample users.
                     
                     let first = User(name: "Ed Sheeran", city: "London", joinDate: .now.addingTimeInterval(86400 * -10))
                     let second = User(name: "Rosa Diaz", city: "New York", joinDate: .now.addingTimeInterval(86400 * -5))
