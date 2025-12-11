@@ -44,19 +44,21 @@ struct ContentView: View {
         sort: \User.name
     ) var users: [User]
     // @State private var navPath = [User]()
+    
+    @State private var isShowingUpcomingOnly = false
+    @State private var sortOrder = [
+        SortDescriptor(\User.name),
+        SortDescriptor(\User.joinDate)
+    ]
 
     var body: some View {
         // NavigationStack(path: $navPath) {
         NavigationStack {
-            List(users) { user in
-                NavigationLink(value: user) {
-                    Text(user.name)
-                }
-            }
+            UsersView(minimumJoinDate: isShowingUpcomingOnly ? Date.now : Date.distantPast, sortOrder: sortOrder)
             .navigationTitle("Users")
-            // .navigationDestination(for: User.self) { selectedUser in
-            //     EditUserView(user: selectedUser)
-            // }
+            .navigationDestination(for: User.self) { selectedUser in
+                EditUserView(user: selectedUser)
+            }
             .toolbar {
                 /*
                 Button("Add User", systemImage: "plus") {
@@ -81,6 +83,27 @@ struct ContentView: View {
                     modelContext.insert(second)
                     modelContext.insert(third)
                     modelContext.insert(fourth)
+                }
+                
+                Button(isShowingUpcomingOnly ? "Show Everyone" : "Show Upcoming") {
+                    isShowingUpcomingOnly.toggle()
+                }
+                
+                Menu("Sort", systemImage: "arrow.up.arrow.down") {
+                    Picker("Sort", selection: $sortOrder) {
+                        Text("Sort By Name")
+                            .tag([
+                                SortDescriptor(\User.name),
+                                SortDescriptor(\User.joinDate)
+                            ])
+                        
+                        Text("Sort By Join Date")
+                            .tag([
+                                SortDescriptor(\User.joinDate),
+                                SortDescriptor(\User.name)
+                                
+                            ])
+                    }
                 }
             }
         }
