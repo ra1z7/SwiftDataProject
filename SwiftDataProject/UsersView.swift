@@ -14,7 +14,13 @@ struct UsersView: View {
     var body: some View {
         List(users) { user in
             NavigationLink(value: user) {
-                Text(user.name)
+                VStack(alignment: .leading) {
+                    Text(user.name)
+                        .font(.headline)
+                    Text(user.joinDate.formatted(date: .abbreviated, time: .omitted))
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
             }
         }
     }
