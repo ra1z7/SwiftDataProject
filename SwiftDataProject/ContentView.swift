@@ -93,6 +93,7 @@ struct ContentView: View {
                     .contentTransition(.numericText())
                     
                     Menu("Sort", systemImage: "arrow.up.arrow.down") {
+                        // Compare the results between using Menu view and not using it.
                         Picker("Sort", selection: $sortOrder.animation()) {
                             Text("Sort By Name")
                                 .tag([
@@ -106,6 +107,7 @@ struct ContentView: View {
                                     SortDescriptor(\User.name)
                                     
                                 ])
+                            // tag() lets us attach specific values of our choosing to each picker option. Here that means we can literally make the tag of each option its own SortDescriptor array, and SwiftUI will assign that tag to the sortOrder property automatically.
                         }
                     }
                 }

@@ -25,14 +25,19 @@ struct UsersView: View {
         }
     }
 
-    init(minimumJoinDate: Date, sortOrder: [SortDescriptor<User>]) {
-        _users = Query(
+    init(minimumJoinDate: Date, sortOrder: [SortDescriptor<User>]) { // SortDescriptor type needs to know what it's sorting, so we need to specify User inside angle brackets
+        _users = Query( // // I know I defined a generic Query variable earlier, but now that the View is loading and I have this specific minimumJoinDate, I want to replace the instructions for that Query. Here are the new instructions: Filter by this specific date and sort by sortOrder.
             filter:
                 #Predicate<User> { user in
                     user.joinDate >= minimumJoinDate
                 },
             sort: sortOrder
         )
+        
+        // users: This is the final result, an array of User objects ([User]) that you display in a List.
+        // _users: This is the SwiftData Query object itself. It contains the instructions on how to fetch that data (filtering, sorting, etc.)
+        
+        // When you declare @Query var users: [User], Swift creates a hidden storage variable named _users for you.
     }
 }
 
