@@ -107,6 +107,12 @@ struct ContentView: View {
                                     SortDescriptor(\User.name)
                                     
                                 ])
+                            
+                            Text("Sort By City")
+                                .tag([
+                                    SortDescriptor(\User.city),
+                                    SortDescriptor(\User.name)
+                                ])
                             // tag() lets us attach specific values of our choosing to each picker option. Here that means we can literally make the tag of each option its own SortDescriptor array, and SwiftUI will assign that tag to the sortOrder property automatically.
                         }
                     }
