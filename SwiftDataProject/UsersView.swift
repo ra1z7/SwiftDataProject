@@ -9,17 +9,31 @@ import SwiftData
 import SwiftUI
 
 struct UsersView: View {
+    @Environment(\.modelContext) var modelContext
     @Query var users: [User]
 
     var body: some View {
         List(users) { user in
             NavigationLink(value: user) {
-                VStack(alignment: .leading) {
-                    Text(user.name)
-                        .font(.headline)
-                    Text(user.joinDate.formatted(date: .abbreviated, time: .omitted))
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(user.name)
+                            .font(.headline)
+                        Text(user.joinDate.formatted(date: .abbreviated, time: .omitted))
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                    
+                    
+                    Spacer()
+                    
+                    Text(String(user.jobs.count))
+                        .fontWeight(.black)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 5)
+                        .background(.blue)
+                        .foregroundStyle(.white)
+                        .clipShape(.circle)
                 }
             }
         }
@@ -38,6 +52,17 @@ struct UsersView: View {
         // _users: This is the SwiftData Query object itself. It contains the instructions on how to fetch that data (filtering, sorting, etc.)
         
         // When you declare @Query var users: [User], Swift creates a hidden storage variable named _users for you.
+    }
+    
+    func addSample() {
+        let sampleUser = User(name: "Piper Chapman", city: "New York", joinDate: Date.now)
+        let job1 = Job(name: "Product Manager", priority: 3)
+        let job2 = Job(name: "Developer", priority: 2)
+        
+        modelContext.insert(sampleUser)
+        
+        sampleUser.jobs.append(job1)
+        sampleUser.jobs.append(job2)
     }
 }
 
