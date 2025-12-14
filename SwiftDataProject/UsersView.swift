@@ -27,6 +27,7 @@ struct UsersView: View {
                     
                     Spacer()
                     
+                    // When you fetch a User, SwiftData does not load their 5,000 jobs immediately. It waits until your code actually asks for user.jobs. This keeps your app fast.
                     Text(String(user.jobs.count))
                         .fontWeight(.black)
                         .padding(.vertical, 10)
@@ -37,6 +38,7 @@ struct UsersView: View {
                 }
             }
         }
+        .onAppear(perform: addSample)
     }
 
     init(minimumJoinDate: Date, sortOrder: [SortDescriptor<User>]) { // SortDescriptor type needs to know what it's sorting, so we need to specify User inside angle brackets
@@ -56,13 +58,15 @@ struct UsersView: View {
     
     func addSample() {
         let sampleUser = User(name: "Piper Chapman", city: "New York", joinDate: Date.now)
+        modelContext.insert(sampleUser)
+        
         let job1 = Job(name: "Product Manager", priority: 3)
         let job2 = Job(name: "Developer", priority: 2)
         
-        modelContext.insert(sampleUser)
-        
         sampleUser.jobs.append(job1)
         sampleUser.jobs.append(job2)
+        
+        // SwiftData automatically updates job1.owner and job2.owner to point to that sampleUser. They stay in sync automatically.
     }
 }
 
