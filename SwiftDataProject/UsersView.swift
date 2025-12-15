@@ -28,7 +28,7 @@ struct UsersView: View {
                     Spacer()
                     
                     // When you fetch a User, SwiftData does not load their 5,000 jobs immediately. It waits until your code actually asks for user.jobs. This keeps your app fast.
-                    Text(String(user.jobs.count))
+                    Text(String(user.unwrappedJobs.count))
                         .fontWeight(.black)
                         .padding(.vertical, 10)
                         .padding(.horizontal, 5)
@@ -63,8 +63,8 @@ struct UsersView: View {
         let job1 = Job(name: "Product Manager", priority: 3)
         let job2 = Job(name: "Developer", priority: 2)
         
-        sampleUser.jobs.append(job1)
-        sampleUser.jobs.append(job2)
+        sampleUser.jobs?.append(job1)
+        sampleUser.jobs?.append(job2)
         
         // SwiftData automatically updates job1.owner and job2.owner to point to that sampleUser. They stay in sync automatically.
     }

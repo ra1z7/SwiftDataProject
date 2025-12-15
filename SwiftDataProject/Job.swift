@@ -12,8 +12,8 @@ import SwiftData
 
 @Model
 class Job {
-    var name: String
-    var priority: Int
+    var name: String = "None"
+    var priority: Int = 1
     var owner: User? // Each Job belongs to One User (Many-to-One Relationship)
     // owner property is optional because a job might be created before it is assigned to a user.
     
