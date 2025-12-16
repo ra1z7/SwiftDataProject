@@ -26,8 +26,13 @@ class User {
     // This is called a migration: when we add or delete properties in our models, as our needs evolve over time. SwiftData can do simple migrations like this one automatically, but as you progress further you'll learn how you can create custom migrations to handle bigger model changes.
     
     var unwrappedJobs: [Job] {
-        jobs ?? []
+        // If jobs exists, return it. If it is nil, return an empty array.
+        return jobs ?? []
     }
+    
+    // Now we can avoid writing code like:
+    //   Text(String(user.jobs?.count ?? 0)) and replace it with:
+    //   Text(String(user.unwrappedJobs.count))
 
     init(name: String, city: String, joinDate: Date) {
         self.name = name

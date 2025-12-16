@@ -6,7 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4E2B82A52EF16575003D3B58 /* iCloudNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E2B82A42EF1656A003D3B58 /* iCloudNotes.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		4E2B82A42EF1656A003D3B58 /* iCloudNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloudNotes.swift; sourceTree = "<group>"; };
 		4E9A72D02EE701EA00948984 /* SwiftDataProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftDataProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -32,6 +37,7 @@
 		4E9A72C72EE701EA00948984 = {
 			isa = PBXGroup;
 			children = (
+				4E2B82A42EF1656A003D3B58 /* iCloudNotes.swift */,
 				4E9A72D22EE701EA00948984 /* SwiftDataProject */,
 				4E9A72D12EE701EA00948984 /* Products */,
 			);
@@ -119,6 +125,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E2B82A52EF16575003D3B58 /* iCloudNotes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
