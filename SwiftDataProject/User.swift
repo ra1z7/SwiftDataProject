@@ -9,8 +9,8 @@ import Foundation
 import SwiftData
 
 // SwiftData's model objects are powered by the same observation system that makes @Observable classes work, which means changes to your model objects are automatically picked up by SwiftUI so that our data and our user interface stay in sync.
-@Model
-class User {
+@Model // It is a macro
+class User { // SwiftData models conform to Identifiable automatically.
     var name: String = "Anonymous"
     var city: String = "Unknown"
     var joinDate: Date = Date.now
@@ -19,6 +19,8 @@ class User {
      When we don't use @Relationship macro, it's default deleteRule (rule that describes how related objects should be handled when their owning object is deleted) option is .nullify, meaning when you delete the user, the jobs stay in the database, but their owner is set to nil (This is a smart move from SwiftData, because you don't get any surprise data loss). The problem is you might end up with thousands of "orphan" jobs that belong to nobody, cluttering your databse.
      
      If you specifically want a user's all job objects to be deleted when the user itself is deleted, we need to tell SwiftData explicitly by providing it with a deleteRule of .cascade, which means deleting a User should automatically delete all their Job objects.
+     
+     SwiftData can figure out relationships automatically, so we use @Relationship when we want custom behavior.
     */
     
     // Even after we add a jobs property (there are users that don't have that property initially), the next time our app launches, SwiftData will silently add the jobs property to all its existing users, giving them an empty array by default.
